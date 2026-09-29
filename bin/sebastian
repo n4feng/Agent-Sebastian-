@@ -1,0 +1,77 @@
+#!/bin/bash
+set -euo pipefail
+PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
+cd "$PROJECT_DIR"
+compose() {
+  SEBASTIAN_UID="$(id -u)" SEBASTIAN_GID="$(id -g)" \
+    docker compose -f "$PROJECT_DIR/compose.yaml" "$@"
+}
+playground() {
+  if [ -L ../playground ]; then
+    echo 'Refusing a symlink playground. Use a real sibling directory.' >&2
+    exit 1
+  fi
+  mkdir -p ../playground
+  if [ ! -d ../playground ]; then
+    echo 'The sibling playground path must be a directory.' >&2
+    exit 1
+  fi
+}
+model_ref() {
+  case "$1" in
+    qwen3.8-27b) echo 'hf.co/ggml-org/Qwen3.8-27B-GGUF:Q4_K_M' ;;
+    muse-glimmer-30b) echo 'hf.co/meta-models/Muse-Glimmer-30B-GGUF:Q4_K_M' ;;
+    gemma4-31b-it) echo 'hf.co/google/gemma-4-31B-it-qat-q4_0-gguf:Q4_0' ;;
+    *) echo 'Unknown profile. Use qwen3.8-27b, muse-glimmer-30b, or gemma4-31b-it.' >&2; return 1 ;;
+  esac
+}
+case "${1:-console}" in
+  setup)
+    playground
+    docker version
+    docker compose version
+    docker model version
+    compose build
+    compose up -d --wait gateway
+    echo 'Setup complete. Pull a local model next. External spending is disabled by default.'
+    ;;
+  start)
+    playground
+    compose up -d --wait gateway
+    ;;
+  stop)
+    compose stop gateway
+    ;;
+  down)
+    compose down
+    ;;
+  keys)
+    shift
+    compose run --rm --no-deps keys "$@"
+    ;;
+  models)
+    if [ "${2:-}" = pull ]; then
+      if [ "${3:-}" = all ]; then
+        for model in qwen3.8-27b muse-glimmer-30b gemma4-31b-it; do
+          docker model pull "$(model_ref "$model")"
+        done
+      else
+        docker model pull "$(model_ref "${3:-qwen3.8-27b}")"
+      fi
+    else
+      playground
+      compose run --rm terminal models
+    fi
+    ;;
+  logs)
+    compose logs --tail=100 gateway
+    ;;
+  console)
+    playground
+    compose run --rm terminal
+    ;;
+  *)
+    playground
+    compose run --rm terminal "$@"
+    ;;
+esac

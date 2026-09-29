@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-sebastian"
+version = "0.1.0"
+description = "A local terminal agent with isolated, budgeted cloud delegation"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+sebastian = "sebastian.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sebastian = ["data/*.json"]

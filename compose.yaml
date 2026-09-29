@@ -1,0 +1,76 @@
+name: agent-sebastian
+
+x-runtime: &runtime
+  image: agent-sebastian:0.1.0
+  build: .
+  platform: linux/arm64
+  user: "10001:10001"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  pids_limit: 64
+  tmpfs: ["/tmp:size=16m,mode=1777"]
+  init: true
+
+services:
+  gateway:
+    <<: *runtime
+    entrypoint: ["python", "-m", "sebastian.rpc"]
+    restart: unless-stopped
+    mem_limit: 384m
+    cpus: 1.0
+    volumes:
+      - gateway-state:/var/lib/sebastian/gateway
+      - credentials:/var/lib/sebastian/keys:ro
+      - ipc:/run/sebastian
+      - control:/run/sebastian-control
+    healthcheck:
+      test: ["CMD", "python", "-m", "sebastian.rpc", "--health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options: {max-size: "1m", max-file: "2"}
+
+  terminal:
+    <<: *runtime
+    user: "${SEBASTIAN_UID:-10001}:${SEBASTIAN_GID:-10001}"
+    group_add: ["10001"]
+    profiles: [terminal]
+    network_mode: none
+    mem_limit: 512m
+    cpus: 1.0
+    stdin_open: true
+    tty: true
+    depends_on:
+      gateway: {condition: service_healthy}
+    volumes:
+      - type: bind
+        source: .
+        target: /workspace/project
+        read_only: true
+      - type: bind
+        source: ../playground
+        target: /workspace/playground
+        bind: {create_host_path: false}
+      - ipc:/run/sebastian
+      - control:/run/sebastian-control
+
+  keys:
+    <<: *runtime
+    profiles: [operator]
+    entrypoint: ["python", "-m", "sebastian.keys"]
+    network_mode: none
+    mem_limit: 128m
+    stdin_open: true
+    tty: true
+    volumes:
+      - credentials:/var/lib/sebastian/keys
+
+volumes:
+  gateway-state:
+  credentials:
+  ipc:
+  control:

@@ -1,0 +1,37 @@
+{
+  "verified_on": "2026-09-28",
+  "local": {
+    "qwen3.8-27b": {
+      "name": "Qwen3.8-27B",
+      "model": "hf.co/ggml-org/Qwen3.8-27B-GGUF:Q4_K_M",
+      "quantization": "Q4_K_M",
+      "source": "https://huggingface.co/ggml-org/Qwen3.8-27B-GGUF",
+      "weight_gb_estimate": "16-18"
+    },
+    "muse-glimmer-30b": {
+      "name": "Muse Glimmer-30B",
+      "model": "hf.co/meta-models/Muse-Glimmer-30B-GGUF:Q4_K_M",
+      "quantization": "Q4_K_M",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B-GGUF",
+      "weight_gb_estimate": "17-20"
+    },
+    "gemma4-31b-it": {
+      "name": "Gemma 4 31B IT",
+      "model": "hf.co/google/gemma-4-31B-it-qat-q4_0-gguf:Q4_0",
+      "quantization": "QAT Q4_0",
+      "source": "https://huggingface.co/google/gemma-4-31B-it-qat-q4_0-gguf",
+      "weight_gb_estimate": "17-20"
+    }
+  },
+  "external": {
+    "gpt-5": {"provider":"openai", "input":1.25, "output":10, "cache_write":1.25, "source":"https://developers.openai.com/api/docs/models/gpt-5"},
+    "gpt-5-codex": {"provider":"openai", "input":1.25, "output":10, "cache_write":1.25, "source":"https://developers.openai.com/api/docs/models/gpt-5-codex"},
+    "gpt-5.3-codex": {"provider":"openai", "input":1.75, "output":14, "cache_write":1.75, "source":"https://developers.openai.com/api/docs/pricing"},
+    "gpt-5.6-sol": {"provider":"openai", "input":4, "output":20, "cache_write":5, "source":"https://developers.openai.com/api/docs/pricing"},
+    "gpt-6-astra": {"provider":"openai", "input":10, "output":50, "cache_write":12.5, "source":"https://developers.openai.com/api/docs/pricing"},
+    "claude-sonnet-4-6": {"provider":"anthropic", "input":3, "output":15, "cache_write":6, "source":"https://platform.claude.com/docs/en/about-claude/pricing"},
+    "claude-opus-4-6": {"provider":"anthropic", "input":5, "output":25, "cache_write":10, "source":"https://platform.claude.com/docs/en/about-claude/pricing"},
+    "claude-sonnet-5": {"provider":"anthropic", "input":2, "output":10, "cache_write":4, "source":"https://platform.claude.com/docs/en/about-claude/pricing"},
+    "claude-opus-5-5": {"provider":"anthropic", "input":4, "output":20, "cache_write":8, "source":"https://platform.claude.com/docs/en/about-claude/pricing"}
+  }
+}
