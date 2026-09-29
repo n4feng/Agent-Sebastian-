@@ -1,0 +1,37 @@
+name: Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit and socket integration tests
+        env:
+          PYTHONPATH: src
+          SEBASTIAN_REQUIRE_SOCKETS: "1"
+        run: python -m unittest discover -s tests -v
+      - name: Shell and Compose validation
+        run: |
+          bash -n bin/sebastian
+          mkdir -p ../playground
+          docker compose config --quiet
+      - name: Container image smoke test
+        run: |
+          docker build -t agent-sebastian-ci .
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges:true agent-sebastian-ci --help
+      - name: Container socket and filesystem integration
+        run: |
+          export SEBASTIAN_UID="$(id -u)"
+          export SEBASTIAN_GID="$(id -g)"
+          docker compose -f compose.yaml -f tests/compose.ci.yaml up -d --build --wait gateway
+          docker compose -f compose.yaml -f tests/compose.ci.yaml run --rm terminal setting list
+          docker compose -f compose.yaml -f tests/compose.ci.yaml run --rm --entrypoint python terminal -c 'from sebastian.files import Workspace; Workspace().write("playground/ci-smoke.txt", "ok"); assert Workspace().read("playground/ci-smoke.txt")["text"] == "ok"'
+          docker compose -f compose.yaml -f tests/compose.ci.yaml run --rm --entrypoint python terminal -c 'import socket; assert len(socket.if_nameindex()) == 1; from pathlib import Path; assert not list(Path("/var/lib/sebastian/keys").glob("*.key"))'
+      - name: Stop test services
+        if: always()
+        run: docker compose -f compose.yaml -f tests/compose.ci.yaml down

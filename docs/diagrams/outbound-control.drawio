@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="outbound-control" name="outbound-control">
+    <mxGraphModel dx="1000" dy="1210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1210" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="External request controls" style="text;html=0;strokeColor=none;fillColor=none;align=left;fontSize=23;fontStyle=1;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="55" y="20" width="800" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="propose" value="Local agent proposes&#10;a minimal external task" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="350" y="95" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="inspect" value="Assemble exact payload&#10;and inspect locally" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="350" y="205" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="privacy" value="Privacy&#10;decision" style="rhombus;whiteSpace=wrap;html=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="390" y="315" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="block" value="BLOCK&#10;No external transmission" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="335" width="245" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="review" value="Human reviews exact payload&#10;Risk reasons and maximum cost" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="315" y="490" width="370" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="allow" value="Approve&#10;this request?" style="rhombus;whiteSpace=wrap;html=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="395" y="625" width="210" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="reject" value="Reject or redact&#10;New payload needs new review" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="270" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="budget" value="Atomically reserve cost&#10;Request, task, day, month limits" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="315" y="790" width="370" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="costblock" value="Insufficient allowance&#10;Do not dispatch" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="740" y="790" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="send" value="Send approved payload&#10;through the provider adapter" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="330" y="925" width="340" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="settle" value="Record usage and reconcile&#10;Keep uncertain charges reserved" style="rounded=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172033;fontFamily=Helvetica;fontSize=16;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="315" y="1060" width="370" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="propose" target="inspect">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="inspect" target="privacy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="Secret" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.0;exitY=0.5;entryX=1.0;entryY=0.47058823529411764;" edge="1" parent="1" source="privacy" target="block">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="Review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="privacy" target="review">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="review" target="allow">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.0;exitY=0.5043478260869565;entryX=1.0;entryY=0.5058823529411764;" edge="1" parent="1" source="allow" target="reject">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="allow" target="budget">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.5;" edge="1" parent="1" source="budget" target="costblock">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-8" value="Within cap" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="budget" target="send">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#526174;fontColor=#344054;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;" edge="1" parent="1" source="send" target="settle">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

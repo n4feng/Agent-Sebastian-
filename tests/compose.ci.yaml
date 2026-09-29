@@ -1,0 +1,8 @@
+# CI checks the small Python containers on an x86 Linux runner, without loading models.
+services:
+  gateway:
+    platform: linux/amd64
+  terminal:
+    platform: linux/amd64
+  keys:
+    platform: linux/amd64
